@@ -24,17 +24,23 @@ text_after_topics = {}
 last_topic = ''
 for elem in field_with_topics:
     if elem.tag_name == 'h5':
-        last_topic = elem.text
         topics.append(elem.text)
         flag = True
 
         text_after_topics[last_topic] = text_under_topic
         text_under_topic = ''
+        last_topic = elem.text
 
-    if flag:
-        text_under_topic += elem.text
+    if flag and elem.tag_name != 'h5':
+        text_under_topic += elem.text + '\n'
 
+file_name = 'topics_with_text.txt'
 
-print("topics:\t", topics)
+with open(file_name, 'w+') as f:
+    for topic, text in text_after_topics.items():
+        f.write(f"TOPIC:\t{topic}\n")
+        f.write(f"TEXT:\t{text}\n\n")
+
+# print("topics:\t", topics)
 print(text_after_topics)
 driver.quit()

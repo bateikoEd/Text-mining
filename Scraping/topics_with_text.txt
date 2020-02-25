@@ -1,0 +1,45 @@
+TOPIC:	
+TEXT:	
+
+TOPIC:	Text mining is a relatively new area of computer science, and its use has grown as the unstructured data available continues to increase exponentially in both relevance and quantity.
+TEXT:	Text mining can be used to make the large quantities of unstructured data accessible and useful, thereby generating not only value, but delivering ROI from unstructured data management as we’ve seen with applications of text mining for Risk Management Software and Cybercrime applications.
+Through techniques such as categorization, entity extraction, sentiment analysis and others, text mining extracts the useful information and knowledge hidden in text content. In the business world, this translates in being able to reveal insights, patterns and trends in even large volumes of unstructured data. In fact, it’s this ability to push aside all of the non-relevant material and provide answers that is leading to its rapid adoption, especially in large organizations. 
+These 10 text mining examples can give you an idea of how this technology is helping organizations today.
+
+
+TOPIC:	1 – Risk management
+TEXT:	No matter the industry, Insufficient risk analysis is often a leading cause of failure. This is especially true in the financial industry where adoption of Risk Management Software based on text mining technology can dramatically increase the ability to mitigate risk, enabling complete management of thousands of sources and petabytes of text documents, and providing the ability to link together information and be able to access the right information at the right time.
+
+
+TOPIC:	2 – Knowledge management
+TEXT:	Not being able to find important information quickly is always a challenge when managing large volumes of text documents—just ask anyone in the healthcare industry. Here, organizations are challenged with a tremendous amount of information—decades of research in genomics and molecular techniques, for example, as well as volumes of clinical patient data—that could potentially be useful for their largest profit center: new product development.  Here, knowledge management software based on text mining offer a clear and reliable solution for the “info-glut” problem.
+
+
+TOPIC:	3 – Cybercrime prevention
+TEXT:	The anonymous nature of the internet and the many communication features operated through it contribute to the increased risk of  internet-based crimes. Today, text mining intelligence and anti-crime applications are making internet crime prevention easier for any enterprise and law enforcement or intelligence agencies.
+
+
+TOPIC:	4 – Customer care service
+TEXT:	Text mining, as well as natural language processing are frequent applications for customer care. Today, text analytics software is frequently adopted to improve customer experience using different sources of valuable information such as surveys, trouble tickets, and customer call notes to improve the quality, effectiveness and speed in resolving problems. Text analysis is used to provide a rapid, automated response to the customer, dramatically reducing their reliance on call center operators to solve problems. 
+
+
+TOPIC:	5 – Fraud detection through claims investigation
+TEXT:	Text analytics is a tremendously effective technology in any domain where the majority of information is collected as text. Insurance companies are taking advantage of text mining technologies by combining the results of text analysis with structured data to prevent frauds and swiftly process claims.
+
+
+TOPIC:	6 – Contextual Advertising
+TEXT:	Digital advertising is a moderately new and growing field of application for text analytics. Here,  companies such as Admantx have made text mining the core engine for contextual retargeting  with great success. Compared to the traditional cookie-based approach, contextual advertising provides better accuracy, completely preserves the user’s privacy.
+
+
+TOPIC:	7 – Business intelligence
+TEXT:	This process is used by large companies to uphold and support decision making. Here, text mining really makes the difference, enabling the analyst to quickly jump at the answer even when analyzing petabytes of internal and open source data. Applications such as the Cogito Intelligence Platform (link to CIP) are able to monitor thousands of sources and analyze large data volumes to extract from them only the relevant content.
+
+
+TOPIC:	8 – Content enrichment
+TEXT:	While it’s true that working with text content still requires a bit of human effort, text analytics techniques make a significant difference when it comes to being able to more effectively manage large volumes of information. Text mining techniques enrich content, providing a scalable layer to tag, organize and summarize the available content  that makes it suitable for a variety of purposes.
+
+
+TOPIC:	9 – Spam filtering
+TEXT:	E-mail is an effective, fast and reasonably cheap way to communicate, but it comes with a dark side: spam. Today, spam is a major issue for  internet service providers, increasing their costs for service management and hardwaresoftware updating; for users, spam is an entry point for viruses and impacts productivity. Text mining techniques can be implemented to improve the effectiveness of statistical-based filtering methods. 
+
+
