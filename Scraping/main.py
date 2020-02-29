@@ -1,7 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from html.parser import HTMLParser
-
+from openpyxl import Workbook, load_workbook
 
 #create a new Firefox session
 driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
@@ -36,11 +34,24 @@ for elem in field_with_topics:
 
 file_name = 'topics_with_text.txt'
 
-with open(file_name, 'w+') as f:
+'''with open(file_name, 'w+') as f:
     for topic, text in text_after_topics.items():
-        f.write(f"TOPIC:\t{topic}\n")
-        f.write(f"TEXT:\t{text}\n\n")
+        f.write(f'{topic}\n')
+        f.write(text)'''
 
-# print("topics:\t", topics)
-print(text_after_topics)
+workbook = Workbook()
+worksheet = workbook.active
+worksheet.title = 'Text mining'
+
+worksheet.cell(row=1, column=1).value = "Topics"
+worksheet.cell(row=1, column=2).value = "Text"
+
+count_row = 2
+for topic, text in text_after_topics.items():
+    worksheet.cell(row=count_row, column=1).value = topic.rstrip()
+    worksheet.cell(row=count_row, column=2).value = text.rstrip()
+    count_row += 1
+
+workbook.save('Text.xlsx')
+
 driver.quit()
