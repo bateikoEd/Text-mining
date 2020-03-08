@@ -4,14 +4,15 @@ import numpy as np
 from time import strptime
 import calendar as cal
 
-def define_number_of_month(name_month):
 
+def define_number_of_month(name_month):
     month_name_number = {}
     for x in range(1, 13):
         month_name_number[cal.month_name[x].lower()] = x
         month_name_number[cal.month_abbr[x].lower()] = x
 
     return month_name_number[name_month.lower()]
+
 
 doc = []
 with open('dates.txt') as file:
@@ -27,7 +28,7 @@ res_08_03_1 = df.str.extractall(
 
 # firs column convert to dateTime and addition in date_list
 type_error, index_error, count = 0, 0, 0
-'''date_list = []
+date_list = []
 for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     if res_08_03_1[0].isnull()[i][0] == np.False_:  # no null
         try:
@@ -58,13 +59,11 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
         count += 1
 
 print(f"type_error:\t{type_error}\tindex_error:\t{index_error}\tcount:\t{count}")
-print(f"date:\t{len(date_list)}")'''
+print(f"date:\t{len(date_list)}")
 # date_list_res = pd.DataFrame(date_list,index=date_list[:,0])
 
 
-
-
-#second column convert to dateTime and addition in date_list
+# second column convert to dateTime and addition in date_list
 '''print(f"len:\t{type(res_08_03_1.index[-1][0])}")
 date_list1 = []
 count_error = 0
@@ -97,29 +96,37 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
 print(f"type_error:\t{type_error}\tindex_error:\t{index_error}\tcount:\t{count}")
 print(f"date:\t{date_list1}")'''
 
-#third column
-
-name_month = 'september'
-print(define_number_of_month(name_month))
-
-# print(f"cal:\t{cal.day_abbr}")
-
-
-
-
-
-# print(f"len:\t{res_08_03_1[2][200:250]}")
+# third column
 date_list2 = []
 count_not_null = 0
-'''
+
 for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     try:
         if res_08_03_1[2].isnull()[i][0] == np.False_:
-            date = res_08_03_1[1][i][0]
+            date = res_08_03_1[2][i][0]
 
+            print(f"null:\t{res_08_03_1[2].isnull()[i][0]}\tindex:\t{i}\ttype:\t{type(date)}\tvalue:\t{date}")
+            name_month = re.search(r' \w{3,9} ', date)
 
-                date_list1.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
+            if name_month is not None:
+                date = f"{date[:2]}/{define_number_of_month(name_month.group().strip())}/{date[-4:]}"
+                print(f"month:\t{name_month.group()}\tvalue:\t{date}")
+                date_list2.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
 
+    except TypeError:
+        type_error += 1
+        count += 1
+        continue
 
-# print(f"list_indexes{list_indexes}")'''
+    except IndexError:
+        index_error += 1
+        count += 1
+        continue
+
+    i += 1
+    count += 1
+
+# print(f"type_error:\t{type_error}\tindex_error:\t{index_error}\tcount:\t{count}")
+# print(f"list+++++++++:\n{date_list2}")
+# print(f"list_indexes{list_indexes}")
 # print(f"value:{}")
