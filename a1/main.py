@@ -1,6 +1,17 @@
 import pandas as pd
 import re
 import numpy as np
+from time import strptime
+import calendar as cal
+
+def define_number_of_month(name_month):
+
+    month_name_number = {}
+    for x in range(1, 13):
+        month_name_number[cal.month_name[x].lower()] = x
+        month_name_number[cal.month_abbr[x].lower()] = x
+
+    return month_name_number[name_month.lower()]
 
 doc = []
 with open('dates.txt') as file:
@@ -54,28 +65,22 @@ print(f"date:\t{len(date_list)}")'''
 
 
 #second column convert to dateTime and addition in date_list
-print(f"len:\t{type(res_08_03_1.index[-1][0])}")
+'''print(f"len:\t{type(res_08_03_1.index[-1][0])}")
 date_list1 = []
 count_error = 0
 # print(f"if_value:\t{res_08_03_1[1].isnull()[25][0]}")
 print(f"value:\t{res_08_03_1[1]}\ttype:\t{type(res_08_03_1[1][452][0])}")
 
 for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
-    # print(f"i:\t{i}")
-
     try:
         if res_08_03_1[1].isnull()[i][0] == np.False_:
-            # print(f"value:\t{res_08_03_1[1][i][0]}\tlen:\t{len(res_08_03_1[1][i][0])}")
             date = res_08_03_1[1][i][0]
 
             if 8 >= len(date) >= 4:
 
-                # month = re.search(r'/\d{1,2}/', res_08_03_1[0][i][0])
                 date = '1/' + date
-
                 date_list1.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
 
-            # print(f"old_year:\t{res_08_03_1[1][i][0]}\tnew_year:\t{date}")
     except TypeError:
         type_error += 1
         count += 1
@@ -90,6 +95,31 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     count += 1
 
 print(f"type_error:\t{type_error}\tindex_error:\t{index_error}\tcount:\t{count}")
-print(f"date:\t{date_list1}")
+print(f"date:\t{date_list1}")'''
 
-#thirt
+#third column
+
+name_month = 'september'
+print(define_number_of_month(name_month))
+
+# print(f"cal:\t{cal.day_abbr}")
+
+
+
+
+
+# print(f"len:\t{res_08_03_1[2][200:250]}")
+date_list2 = []
+count_not_null = 0
+'''
+for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
+    try:
+        if res_08_03_1[2].isnull()[i][0] == np.False_:
+            date = res_08_03_1[1][i][0]
+
+
+                date_list1.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
+
+
+# print(f"list_indexes{list_indexes}")'''
+# print(f"value:{}")
