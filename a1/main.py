@@ -2,6 +2,7 @@ import pandas as pd
 import re
 import numpy as np
 import calendar as cal
+from datetime import datetime
 
 
 def define_number_of_month(name_month):
@@ -27,8 +28,9 @@ res_08_03_1 = df.str.extractall(
     r'(\d{1,2}[/]\d{1,2}[/]\d{2,4})|(\d{1,2}[/]\d{2,4})|(\d{1,2}[-./ ][January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec]+[-./, ]+\d{2,4})|([January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec]\S+[., -]+\d{2,4}[,. -]+\d{4})|([January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec]+\s+\w+[,.]\s+\d{4})')
 
 # firs column convert to dateTime and addition in date_list
-# type_error, index_error, count = 0, 0, 0
 date_list = []
+
+# date_list = pd.Series([], dtype=type(pd.DateTime))
 for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     try:
         if res_08_03_1[0].isnull()[i][0] == np.False_:
@@ -45,7 +47,7 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
                     day = re.search(r'\d{1,2}/', res_08_03_1[0][i][0])
                     date = f"{month.group()[1:-1]}/{day.group()[:-1]}/{year}"
 
-                date_list.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
+                date_list.append(pd.to_datetime(date, format="%d/%m/%Y"))
 
     except TypeError:
         continue
@@ -62,8 +64,7 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
             if 8 >= len(date) >= 4:
 
                 date = '1/' + date
-                date_list.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
-
+                date_list.append(pd.to_datetime(date, format="%d/%m/%Y"))
     except TypeError:
         continue
 
@@ -80,8 +81,7 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
 
             if name_month is not None:
                 date = f"{date[:2]}/{define_number_of_month(name_month.group().strip())}/{date[-4:]}"
-                date_list.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
-
+                date_list.append(pd.to_datetime(date, format="%d/%m/%Y"))
     except TypeError:
         continue
 
@@ -90,7 +90,6 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
 
 
 #forth column
-
 for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     try:
         if res_08_03_1[3].isnull()[i][0] == np.False_:
@@ -104,7 +103,8 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
             year = year.group()
 
             date = f"{day}/{month}/{year}"
-            date_list.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
+            date_list.append(pd.to_datetime(date, format="%d/%m/%Y"))
+    #            date_list.append(pd.to_datetime(pd.Series(date), format="%d/%m/%Y"))
 
     except IndexError:
         continue
@@ -112,8 +112,8 @@ for i in range(0, pd.to_numeric(res_08_03_1.index[-1][0])):
     except ValueError:
         continue
 
-print(f"len:\t{len(date_list)}\nDATE_LIST:\n{date_list}")
-# print(f"SORTED:\n{date_list.sort()}")
+#convert to Series
+new_series = pd.Series(date_list)
+#sorting
+print(new_series.argsort())
 
-# date_series = pd.Series(date_list)
-# print(date_series.sort_values())
