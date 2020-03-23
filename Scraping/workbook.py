@@ -1,22 +1,31 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
+import pandas as pd
+
+# workbook = Workbook()
+# workSheet = workbook.active
+#
+# file_name = "bbc_news.xlsx"
+#
+# workSheet.title = "BBC"
+#
+# workSheet.cell(column=1, row=1, value="Date")
+# workSheet.cell(column=2, row=1, value="Author")
+# workSheet.cell(column=3, row=1, value="Main_Topics")
+# workSheet.cell(column=4, row=1, value="Topic")
+# workSheet.cell(column=5, row=1, value="Text")
+#
+# workbook.save(file_name)
+
+columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
+
+df_news = pd.DataFrame([list("zxcvb")], columns=columns_my)
+print(f"new:\n{df_news}")
+
+row = list('abcde')
+df_current = pd.DataFrame([row], columns=columns_my)
+print(f"current:\n{df_current}")
 
 
-workbook = Workbook()
-worksheet = workbook.active
-
-file_name = "ok1.xlsx"
-
-worksheet.title = "BBC"
-
-ws3 = workbook.create_sheet(title="Data")
-
-ws3.cell(row=1, column=2, value=4)
-
-# for row in range(10, 20):
-#     for col in range(27, 54):
-#         d = ws3.cell(column=col, row=row)
-#         d.value = f"{get_column_letter(col)}"
-#         print(f"d:\t{d}\tvalue:\t{d.value}")
-# print(ws3.cell(10, 27).value)
-workbook.save(file_name)
+df_news = df_news.append(df_current, ignore_index=True)
+print(f"new:\n{df_news}")
