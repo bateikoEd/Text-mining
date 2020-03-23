@@ -1,31 +1,22 @@
 from openpyxl import Workbook, load_workbook
+from openpyxl.utils import get_column_letter
+
 
 workbook = Workbook()
-# worksheet = workbook.active
-'''
-worksheet1 = workbook.create_sheet("My_sheet")
-worksheet2 = workbook.create_sheet("My_sheet_2", 0)
-worksheet3 = workbook.create_sheet("My_sheet_3", -1)
+worksheet = workbook.active
 
-worksheet.title = "New Title"
-worksheet.sheet_properties.tabColor = "1072BA"
-worksheet3 = workbook["New Title"]
-print(workbook.sheetnames)
+file_name = "ok1.xlsx"
 
-worksheet["A1"] = "hello"
-worksheet["B1"] = "world!"
-cell = worksheet['A4']
-worksheet['A4'] = 4
-'''
-name_file = "work_Book.xlsx"
-workbook = load_workbook(name_file)
-print(workbook.sheetnames)
-worksheet = workbook['New Title']
-cell = worksheet['A4']
-print(f"cell:\t{cell.value}\na4:\t{worksheet['A4'].value}")
-print(f"cell():\t{worksheet.cell(row=4, column= 1).value}")
+worksheet.title = "BBC"
 
-cell.value = 10
-for row in worksheet.iter_rows(min_row=1, max_col=3, max_row=4, values_only=True):
-    print(row)
-workbook.save(filename=name_file)
+ws3 = workbook.create_sheet(title="Data")
+
+ws3.cell(row=1, column=2, value=4)
+
+# for row in range(10, 20):
+#     for col in range(27, 54):
+#         d = ws3.cell(column=col, row=row)
+#         d.value = f"{get_column_letter(col)}"
+#         print(f"d:\t{d}\tvalue:\t{d.value}")
+# print(ws3.cell(10, 27).value)
+workbook.save(file_name)
