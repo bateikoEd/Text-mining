@@ -14,7 +14,7 @@ sheet_name = "BBC"
 # workSheet = workbook[sheet_name]
 columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
-df_news = pd.DataFrame([['','','','','']], columns=columns_my)
+df_news = pd.DataFrame(columns=columns_my)
 
 print(df_news)
 # ------- end work with table -------

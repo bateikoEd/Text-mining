@@ -17,15 +17,23 @@ import pandas as pd
 #
 # workbook.save(file_name)
 
-columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
+# columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
+#
+# df_news = pd.DataFrame([list("zxcvb")], columns=columns_my)
+# print(f"new:\n{df_news}")
+#
+# row = list('abcde')
+# df_current = pd.DataFrame([row], columns=columns_my)
+# print(f"current:\n{df_current}")
+#
+#
+# df_news = df_news.append(df_current, ignore_index=True)
+# print(f"new:\n{df_news}")
 
-df_news = pd.DataFrame([list("zxcvb")], columns=columns_my)
-print(f"new:\n{df_news}")
+file_name = "panddas.xlsx"
+new_file_name = "panddas1.xlsx"
+df_exel = pd.read_excel(file_name, index_col=0)
 
-row = list('abcde')
-df_current = pd.DataFrame([row], columns=columns_my)
-print(f"current:\n{df_current}")
+# df_csv = pd.read_csv(file_name)
 
-
-df_news = df_news.append(df_current, ignore_index=True)
-print(f"new:\n{df_news}")
+df_exel.to_excel(new_file_name)
