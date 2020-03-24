@@ -17,7 +17,7 @@ driver.get(main_url)
 
 for count_of_main_topics in range(0,7):
 
-    # find
+    # find maint topics
     main_topics = driver.find_elements_by_xpath('//div[@class="navigation navigation--wide"]/ul/li')[2:10]
 
     # click on main topic
@@ -25,9 +25,9 @@ for count_of_main_topics in range(0,7):
 
     current_url = driver.current_url
 
-    main_topics = driver.find_element_by_class_name("page-title").text
+    main_topics_text = driver.find_element_by_class_name("page-title").text
 
-    print(f"main_topic:\t{main_topics}\tcount:\t{count_of_main_topics}")
+    print(f"main_topic:\t{main_topics_text}\tcount:\t{count_of_main_topics}")
 
     list_of_news_of_Ukraine = driver.find_elements_by_xpath('//div[@class="eagle"]/div')
     len_of_news = len(list_of_news_of_Ukraine)
@@ -44,9 +44,13 @@ for count_of_main_topics in range(0,7):
         date = driver.find_element_by_xpath('//li[@class="mini-info-list__item"]/div').text
         topic = driver.find_element_by_tag_name('h1').text
 
+        print(f"Topic:\t{topic}\tdate:\t{date}")
+
         if len(df_news.loc[(df_news['Date'] == date) & (df_news['Topic'] == topic)]) > 0:
+            print("Exist")
             continue
         elif len(df_current_block_topics.loc[(df_current_block_topics['Date'] == date) & (df_current_block_topics['Topic'] == topic)]) > 0:
+            print("Exist")
             continue
 
         try:
@@ -65,7 +69,8 @@ for count_of_main_topics in range(0,7):
             except:
                 continue
 
-        row = [date, author, main_topics, topic, all_text]
+
+        row = [date, author, main_topics_text, topic, all_text]
         df_current_topic = pd.DataFrame([row],columns=columns_my)
 
         df_current_block_topics = df_current_block_topics.append(df_current_topic, ignore_index=True)
@@ -73,8 +78,5 @@ for count_of_main_topics in range(0,7):
     df_news = df_news.append(df_current_block_topics, ignore_index=True)
 
     df_news.to_excel(file_name)
-
-
-print(f"df:\n{df_news}")
 
 driver.quit()
