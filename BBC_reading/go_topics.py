@@ -30,13 +30,15 @@ def go_date_bbc(message):
         return datetime.date.today().strftime("%d/%m/%Y")
 
 file_name = "panddas.xlsx"
+file_name_1 = "panddas1.xlsx"
 columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
 df_news = pd.read_excel(file_name, index_col=0)
-
+print(f"before:\n{df_news.head}")
 for coutn, message in enumerate(df_news[columns_my[0]]):
-    # print(f"message:\t{message}\tresult:\t{go_date_bbc(message)}")
-    message = go_date_bbc(message)
-    df_news[columns_my[0]][coutn] = go_date_bbc(message)
 
-print(df_news.head)
+    df_news[columns_my[0]][coutn] = go_date_bbc(message)
+    print(f"message:\t{message}\tresult:\t{df_news[columns_my[0]][coutn]}")
+
+print(f"after:\n{df_news.head}")
+df_news.to_excel(file_name_1)

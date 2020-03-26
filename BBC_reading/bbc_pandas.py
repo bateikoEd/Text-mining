@@ -1,5 +1,33 @@
 from selenium import webdriver
 import pandas as pd
+import datetime
+
+def go_date_bbc(message):
+    date_dictionary = {
+        "січ" : "01",
+        "лют": "02",
+        "берез": "03",
+        "квіт": "04",
+        "трав": "05",
+        "черв": "06",
+        "лип": "07",
+        "серп": "08",
+        "вер": "09",
+        "жовт": "10",
+        "лист": "11",
+        "груд": "12"
+    }
+    list_of_message = message.split()
+
+    try:
+        year = int(list_of_message[2].strip())
+        date =  list_of_message[0]
+        current_month = list_of_message[1].strip().lower()
+        for month in date_dictionary.keys():
+            if current_month.startswith(month):
+                return f"{date}/{date_dictionary[month]}/{str(datetime.date.today().year)}"
+    except:
+        return datetime.date.today().strftime("%d/%m/%Y")
 
 driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
 driver.implicitly_wait(5)
@@ -7,7 +35,7 @@ driver.maximize_window()
 
 main_url = 'https://www.bbc.com/ukrainian/topics/ee8750ed-a7fb-453f-bfca-2aa8b3fb064c'
 
-file_name = "panddas.xlsx"
+file_name = "panddas1.xlsx"
 columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
 df_news = pd.read_excel(file_name, index_col=0)
@@ -48,6 +76,8 @@ for count_of_main_topics in range(0,7):
 
         date = driver.find_element_by_xpath('//li[@class="mini-info-list__item"]/div').text
         topic = driver.find_element_by_tag_name('h1').text
+
+        date = go_date_bbc(date)
 
         print(f"Topic:\t{topic}\tdate:\t{date}")
 
