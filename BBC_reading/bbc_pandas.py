@@ -43,11 +43,13 @@ df_news = pd.read_excel(file_name, index_col=0)
 # open browser with first page
 driver.get(main_url)
 
-for count_of_main_topics in range(0,7):
+count_of_number_one_topic = 8  # 2
+count_of_last_topic = 10
+
+for count_of_main_topics in range(0, count_of_last_topic - count_of_number_one_topic - 1):
 
     # find maint topics
-    count_of_number_one_topic = 2
-    count_of_last_topic = 10
+
     main_topics = driver.find_elements_by_xpath('//div[@class="navigation navigation--wide"]/ul/li')[count_of_number_one_topic:count_of_last_topic]
 
     # click on main topic
@@ -74,7 +76,10 @@ for count_of_main_topics in range(0,7):
         # click on current new
         current_web_elem.click()
 
-        date = driver.find_element_by_xpath('//li[@class="mini-info-list__item"]/div').text
+        try:
+            date = driver.find_element_by_xpath('//li[@class="mini-info-list__item"]/div').text
+        except:
+            date = driver.find_element_by_xpath('//*[@id="root"]/main/div[3]/time').text
         topic = driver.find_element_by_tag_name('h1').text
 
         date = go_date_bbc(date)
@@ -107,7 +112,7 @@ for count_of_main_topics in range(0,7):
 
 
         row = [date, author, main_topics_text, topic, all_text]
-        df_current_topic = pd.DataFrame([row],columns=columns_my)
+        df_current_topic = pd.DataFrame([row], columns=columns_my)
         # addition current new to new's current block
         df_current_block_topics = df_current_block_topics.append(df_current_topic, ignore_index=True)
 
