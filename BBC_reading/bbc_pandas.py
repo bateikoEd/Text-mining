@@ -1,37 +1,12 @@
 from selenium import webdriver
 import pandas as pd
-import datetime
 
-
-def go_date_bbc(message):
-    date_dictionary = {
-        "січ" : "01",
-        "лют": "02",
-        "берез": "03",
-        "квіт": "04",
-        "трав": "05",
-        "черв": "06",
-        "лип": "07",
-        "серп": "08",
-        "вер": "09",
-        "жовт": "10",
-        "лист": "11",
-        "груд": "12"
-    }
-    list_of_message = message.split()
-
-    try:
-        year = int(list_of_message[2].strip())
-        date =  list_of_message[0]
-        current_month = list_of_message[1].strip().lower()
-        for month in date_dictionary.keys():
-            if current_month.startswith(month):
-                return f"{date}/{date_dictionary[month]}/{str(datetime.date.today().year)}"
-    except:
-        return datetime.date.today().strftime("%d/%m/%Y")
+from function import go_date_bbc
 
 
 def bbc_scraping(count_of_number_one_topic = 2, count_of_last_topic = 10, file_name = "panddas1.xlsx"):
+
+    main_topics_url = ['']
 
     driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
     driver.implicitly_wait(5)
