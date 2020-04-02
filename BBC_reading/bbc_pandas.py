@@ -3,7 +3,16 @@ import pandas as pd
 
 from function import go_date_bbc
 
-
+'''
+    коронавірус - 0
+    Україна - count_of_number_one_topic = 1,
+    Політика - count_of_number_one_topic = 2
+    Економіка - 3
+    Суспільство - 4
+    Наука - 5
+    Технології - 6
+    Здоров'я - 7
+    Спорт - 8'''
 def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="panddas1.xlsx"):
 
     main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
@@ -94,4 +103,28 @@ def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="
         df_news.to_excel(file_name)
 
     driver.quit()
+    
+'''
+    коронавірус - 0
+    Україна - count_of_number_one_topic = 1,
+    Політика - count_of_number_one_topic = 2
+    Економіка - 3
+    Суспільство - 4
+    Наука - 5
+    Технології - 6
+    Здоров'я - 7
+    Спорт - 8'''
+def unian_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="panddas1.xlsx"):
 
+    main_topics_url = ['https://www.unian.ua/theme/10000718-koronavirus-v-ukraine',
+                       ]
+
+    driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
+    driver.implicitly_wait(5)
+    driver.maximize_window()
+
+    main_url = main_topics_url[0]
+
+    columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
+
+    df_news = pd.read_excel(file_name, index_col=0)
