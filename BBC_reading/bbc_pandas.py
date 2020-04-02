@@ -4,33 +4,30 @@ import pandas as pd
 from function import go_date_bbc
 
 
-def bbc_scraping(count_of_number_one_topic = 2, count_of_last_topic = 10, file_name = "panddas1.xlsx"):
+def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="panddas1.xlsx"):
 
-    main_topics_url = ['']
+    main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
+                       'https://www.bbc.com/ukrainian/topics/75612fa6-147c-4a43-97fa-fcf70d9cced3',
+                       'https://www.bbc.com/ukrainian/topics/ca170ae3-99c1-48db-9b67-2866f85e7342',
+                       'https://www.bbc.com/ukrainian/topics/5307a8d9-f620-40f5-92d4-f99c919a6ffa',
+                       'https://www.bbc.com/ukrainian/topics/0f469e6a-d4a6-46f2-b727-2bd039cb6b53',
+                       'https://www.bbc.com/ukrainian/topics/31684f19-84d6-41f6-b033-7ae08098572a',
+                       'https://www.bbc.com/ukrainian/topics/c4794229-7f87-43ce-ac0a-6cfcd6d3cef2',
+                       'https://www.bbc.com/ukrainian/topics/4063f80f-cccc-44c8-9449-5ca44e4c8592']
 
     driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
     driver.implicitly_wait(5)
     driver.maximize_window()
 
-    main_url = 'https://www.bbc.com/ukrainian/topics/ee8750ed-a7fb-453f-bfca-2aa8b3fb064c'
+    main_url = main_topics_url[0]
 
     columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
     df_news = pd.read_excel(file_name, index_col=0)
 
-    # open browser with first page
-    driver.get(main_url)
+    for count_of_main_topics, current_url in enumerate(main_topics_url[count_of_number_one_topic:count_of_last_topic]):
 
-    for count_of_main_topics in range(0, count_of_last_topic - count_of_number_one_topic - 1):
-
-        # find maint topics
-
-        main_topics = driver.find_elements_by_xpath('//div[@class="navigation navigation--wide"]/ul/li')[count_of_number_one_topic:count_of_last_topic]
-
-        # click on main topic
-        main_topics[count_of_main_topics].click()
-        # update current url
-        current_url = driver.current_url
+        driver.get(current_url)
 
         main_topics_text = driver.find_element_by_class_name("page-title").text
 
