@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-file_name = "panddas1.xlsx"
+file_name = "exel_files/bbc_scraping.xlsx"
 columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
 df_news = pd.read_excel(file_name, index_col=0)

@@ -13,7 +13,7 @@ from function import go_date_bbc
     Технології - 6
     Здоров'я - 7
     Спорт - 8'''
-def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="panddas1.xlsx"):
+def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
     main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
                        'https://www.bbc.com/ukrainian/topics/75612fa6-147c-4a43-97fa-fcf70d9cced3',
@@ -24,6 +24,7 @@ def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="
                        'https://www.bbc.com/ukrainian/topics/c4794229-7f87-43ce-ac0a-6cfcd6d3cef2',
                        'https://www.bbc.com/ukrainian/topics/4063f80f-cccc-44c8-9449-5ca44e4c8592']
 
+    file_name = f"exel_files/{file_name}"
     driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
     driver.implicitly_wait(5)
     driver.maximize_window()
@@ -105,19 +106,25 @@ def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="
     driver.quit()
     
 '''
-    коронавірус - 0
-    Україна - count_of_number_one_topic = 1,
-    Політика - count_of_number_one_topic = 2
-    Економіка - 3
-    Суспільство - 4
-    Наука - 5
-    Технології - 6
-    Здоров'я - 7
-    Спорт - 8'''
-def unian_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="panddas1.xlsx"):
+    Політика - 0
+    Економіка - 1
+    ukraine - 2
+    Технології - 3
+    Спорт - 4
+    corona in the world - 1.0
+    carantin in ukraine - 1.1
+    ooc - 1.2'''
+def zn_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
-    main_topics_url = ['https://www.unian.ua/theme/10000718-koronavirus-v-ukraine',
-                       ]
+    main_topics_url = ['https://dt.ua/POLITICS',
+                       'https://dt.ua/ECONOMICS',
+                       'https://dt.ua/UKRAINE',
+                       'https://dt.ua/TECHNOLOGIES'
+                       'https://dt.ua/SPORT']
+
+    main_topics_url_special = ['https://dt.ua/theme/69',
+                         'https://dt.ua/theme/74',
+                               'https://dt.ua/theme/71']
 
     driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
     driver.implicitly_wait(5)
@@ -128,3 +135,6 @@ def unian_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name
     columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
     df_news = pd.read_excel(file_name, index_col=0)
+
+
+
