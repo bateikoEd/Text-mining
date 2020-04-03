@@ -26,3 +26,8 @@ def go_date_bbc(message):
                 return f"{date}/{date_dictionary[month]}/{str(datetime.date.today().year)}"
     except:
         return datetime.date.today().strftime("%d/%m/%Y")
+
+def for_date_unian(date):
+    date.replace(r', \d{2}:\d{2}', '')
+    date = go_date_bbc(date)
+    return date
