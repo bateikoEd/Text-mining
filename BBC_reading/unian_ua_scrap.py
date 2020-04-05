@@ -1,56 +1,123 @@
+from function import *
 from selenium import webdriver
-import time
-
 import pandas as pd
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 
-from function import go_date_bbc
+def if_exist_in_excel(date, topic):
+    if len(df_news.loc[(df_news['Date'] == date) & (df_news['Topic'] == topic)]) > 0:
+        print("Present")
+        return True
 
-def for_date_unian(date):
-    date.replace(r', \d{2}:\d{2}', '')
-    date = go_date_bbc(date)
-    return date
+    elif len(df_current_block_topics.loc[
+                 (df_current_block_topics['Date'] == date) & (df_current_block_topics['Topic'] == topic)]) > 0:
+        print("Present")
+        return True
 
+    print("Not present")
+    return False
+
+def create_all_text(text_list):
+    all_text = ""
+
+    for elem in text_list:
+        try:
+            all_text += elem.text + "\n"
+        except:
+            continue
+
+    return all_text
+
+def add_new_current_block_topic(row, df_current_block_topics):
+    df_current_topic = pd.DataFrame([row], columns=columns_my)
+    return df_current_block_topics.append(df_current_topic, ignore_index=True)
+
+def click_on_more_n(n):
+
+    button_more_news = driver.find_elements_by_class_name('more')
+    len_of = len(button_more_news)
+    if len_of == 0:
+        print("'More' is not exist")
+        return
+
+    for count in range(0,n):
+        button_more_news = driver.find_elements_by_class_name('more')[count]
+        button_more_news.click()
+
+
+file_name="exel_files/zn_ua_scraping.xlsx"
+
+main_topics_url = ['https://dt.ua/POLITICS',
+                       'https://dt.ua/ECONOMICS',
+                       'https://dt.ua/TECHNOLOGIES'
+                       'https://dt.ua/SPORT',
+                       'https://dt.ua/UKRAINE']
+
+main_topics_url_special = ['https://dt.ua/theme/69',
+                           'https://dt.ua/theme/74',
+                           'https://dt.ua/theme/71']
+
+main_topics_text = ['Політика', 'Економіка','Технології','Спорт','Україна']
 driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
 driver.implicitly_wait(5)
 driver.maximize_window()
 
-file_name = 'p'
-columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
-
-# df_news = pd.read_excel(file_name, index_col=0)
-
-main_url = 'https://dt.ua/POLITICS'
+main_topics_text = main_topics_text[0]
+main_url = main_topics_url[0]
 
 driver.get(main_url)
 
-button_more_news = driver.find_element_by_class_name('more')
+columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
-list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
+df_news = pd.read_excel(file_name, index_col=0)
 
-current_new = list_of_news[0]
+# file_name = 'p'
+columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
-current_new.click()
+max_count = 1
 
-topic = driver.find_element_by_class_name('title').text.split()
+for count_of_more in range(0, max_count + 1):
+    list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
 
-date = driver.find_element_by_class_name('date').text
+    len_old_news = 0 if count_of_more == 0 else len_new_news
+    len_new_news = len(list_of_news)
 
-date = for_date_unian(date)
+    print(f"len_olf:\t{len_old_news}\tlen_new:\t{len_new_news}")
 
-text_list = driver.find_elements_by_tag_name('p')
+    # --- create block of news ---
+    df_current_block_topics = pd.DataFrame(columns=columns_my)
 
-all_text = ""
+    for count_of_current_news in range(len_old_news, len_new_news):
 
-for elem in text_list:
-    try:
-        all_text += elem.text + "\n"
-    except:
-        continue
+        driver.get(main_url)
+        list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
+        # driver.implicitly_wait(5)
+        print(f"coutn:\t{count_of_current_news}")
+        current_new = list_of_news[count_of_current_news]
+        current_new.click()
+        # driver.implicitly_wait(5)
 
-print(f"title:\t{topic}\ndate:\t{date}\ntext:\n\n{all_text}")
+        # ---- start read new ---
+        topic = driver.find_element_by_class_name('title').text.strip()
 
-row = [date, '', main_topics_text, topic, all_text]
+        date = driver.find_element_by_class_name('date').text
+
+        date = for_date_unian(date)
+
+        # condition if we have the current topic with same date
+        if if_exist_in_excel(date, topic):
+            continue
+
+        text_list = driver.find_elements_by_tag_name('p')
+
+        all_text = create_all_text(text_list)
+
+        # ---- end read new ---
+        row = [date, '', main_topics_text, topic, all_text]
+
+        df_current_block_topics = add_new_current_block_topic(row=row, df_current_block_topics=df_current_block_topics)
+
+    df_news = df_news.append(df_current_block_topics, ignore_index=True)
+
+    button_more_news = driver.find_elements_by_class_name('more')[count_of_more]
+    button_more_news.click()
 
 driver.close()
