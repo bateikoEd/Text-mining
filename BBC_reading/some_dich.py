@@ -5,20 +5,6 @@ import time
 import re
 import datetime
 
-def click_on_more_n(n=100):
-
-    for count in range(0,n):
-        button_more_news = driver.find_elements_by_xpath('//a[@href="javascript:void(0)"]')
-        len_of = len(button_more_news)
-
-        if len_of == 0:
-            return False, len_of
-
-        button_more_new = button_more_news[count]
-        button_more_new.click()
-        # driver.implicitly_wait(3)
-
-    return True
 
 
 # login = 'bateiko'
@@ -45,12 +31,8 @@ def click_on_more_n(n=100):
 # time.sleep(5)
 #
 # date = driver.find_element_by_class_name('date').text
-date = '30 березня, 16:49'
 
-print(f"date_before:\t{date}")
-# date = re.sub(r', \d{2}:\d{2}','', date)
-# date = date.rstrip()
-# date = date.replace(r', \d{2}:\d{2}','')
-date = for_date_nz(date)
 
-print(f"after:\t{date}")
+file_name= "exel_files/zn_ua_scraping.xlsx"
+df_news = pd.read_excel(file_name, index_col=0)
+print(df_news.head)
