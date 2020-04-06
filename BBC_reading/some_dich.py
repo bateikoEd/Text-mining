@@ -1,6 +1,9 @@
 from function import *
 from selenium import webdriver
 import pandas as pd
+import time
+import re
+import datetime
 
 def click_on_more_n(n=100):
 
@@ -17,24 +20,37 @@ def click_on_more_n(n=100):
 
     return True
 
-# file_name="exel_files/zn_ua_scraping.xlsx"
 
-# current_url = 'https://dt.ua/POLITICS/postpred-ukrayini-v-oon-rozpoviv-yak-rosiya-peretvoryuye-koronavirus-na-politichnu-zbroyu-343678_.html'
-# main_topics_text = 'Політика'
+# login = 'bateiko'
+# password = '25896ok@la'
+#
+# main_url = 'https://dt.ua/POLITICS/verhovna-rada-progolosuvala-za-priznachennya-stepanova-novim-glavoyu-moz-343057_.html'
+#
+# driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
+# driver.implicitly_wait(5)
+# driver.maximize_window()
+#
+# driver.get(main_url)
+#
+# authorization = driver.find_element_by_xpath('//*[@id="header"]/div/a[4]')
+# authorization.click()
+#
+# login_tag = driver.find_element_by_id('passport_name')
+# password_tag = driver.find_element_by_id('passport_password')
+#
+# login_tag.send_keys(login)
+# password_tag.send_keys(password)
+# password_tag.submit()
+#
+# time.sleep(5)
+#
+# date = driver.find_element_by_class_name('date').text
+date = '30 березня, 16:49'
 
-main_url = 'https://dt.ua/ECONOMICS'
+print(f"date_before:\t{date}")
+# date = re.sub(r', \d{2}:\d{2}','', date)
+# date = date.rstrip()
+# date = date.replace(r', \d{2}:\d{2}','')
+date = for_date_nz(date)
 
-driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
-driver.implicitly_wait(5)
-driver.maximize_window()
-
-driver.get(main_url)
-driver.implicitly_wait(10)
-print(f"eduard")
-close_tab = driver.find_elements_by_xpath('//*[@id="simplemodal-container"]/a')
-if len(close_tab) > 0:
-    close_tab[0].click()
-
-bool_res, max_count = click_on_more_n()
-
-print(f"max:\t{max_count}")
+print(f"after:\t{date}")
