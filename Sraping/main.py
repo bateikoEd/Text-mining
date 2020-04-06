@@ -1,11 +1,12 @@
 import pandas as pd
+from selenium import webdriver
 
-doc = []
-with open('dates.txt') as file:
-    for line in file:
-        doc.append(line)
+driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
+driver.implicitly_wait(5)
+driver.maximize_window()
 
-df = pd.Series(doc)
+main_url = 'https://makeup.com.ua/ua/product/310841/'
 
-res = df.str.extractall(r'(\d{4})|(\d{1,2}[-./ ]\w+[-./ ]\d{2,4})|(\w+[., -]+\d{2,4}[,. -]+\d{4})|(\w+\s+\w+[,.]\s+\d{4})')
-print(res)
+driver.get(main_url)
+
+name = driver.find_elemt
