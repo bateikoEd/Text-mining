@@ -57,7 +57,7 @@ file_name="exel_files/zn_ua_scraping.xlsx"
 
 main_topics_url = ['https://dt.ua/POLITICS',
                        'https://dt.ua/ECONOMICS',
-                       'https://dt.ua/TECHNOLOGIES'
+                       'https://dt.ua/TECHNOLOGIES',
                        'https://dt.ua/SPORT',
                        'https://dt.ua/UKRAINE']
 
@@ -70,13 +70,18 @@ driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_
 driver.implicitly_wait(5)
 driver.maximize_window()
 
+# ----------------------------
+main_topics_count_min = 2
+len_new_news = 0
+count_of_start = 0
 
-main_topic_text = main_topics_text[1]
-main_url = main_topics_url[1]
+
+main_topic_text = main_topics_text[main_topics_count_min]
+main_url = main_topics_url[main_topics_count_min]
 
 columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 driver.get(main_url)
-# time.sleep(2)
+time.sleep(2)
 
 # --- authorization
 login = 'bateiko'
@@ -97,14 +102,14 @@ time.sleep(3)
 
 df_news = pd.read_excel(file_name, index_col=0)
 
-main_topics_count_min = 2
+# main_topics_count_min = 2
 
 len_new_news = 0
 count_of_start = 0
 
 for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:], main_topics_count_min):
+
     main_topic_text = main_topics_text[count_of_topic]
-    # main_url = main_topics_url[1]
     print(f"main_topic:\t{main_topic_text}")
     max_count = 40
 
@@ -117,7 +122,7 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
         time.sleep(1)
 
         list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
-        # time.sleep(1)
+        time.sleep(1)
 
         len_old_news = len_new_news
         len_new_news = len(list_of_news)
@@ -142,17 +147,16 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
 
 
             list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
-            # time.sleep(1)
+            time.sleep(1)
 
             len_new_news_current = len(list_of_news)
             print(f"len_old:\t{len_old_news}\tlen_current:\t{len_new_news_current}")
 
 
-            # driver.implicitly_wait(5)
             print(f"coutn:\t{count_of_current_news}")
             current_new = list_of_news[count_of_current_news]
             current_new.click()
-            # time.sleep(2)
+            time.sleep(1)
 
             # ---- start read new ---
             topic = driver.find_element_by_class_name('title').text.strip()
