@@ -11,8 +11,7 @@ from function import *
     Наука - 4
     Технології - 5
     Здоров'я - 6
-    Спорт - 7
-    Україна - count_of_number_one_topic = 8'''
+    Спорт - 7'''
 def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
     main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',

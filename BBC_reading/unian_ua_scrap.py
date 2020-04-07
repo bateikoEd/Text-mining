@@ -42,15 +42,12 @@ def click_on_more_n(n):
         button_more_news = driver.find_elements_by_link_text('Показати більше статей')
         len_of = len(button_more_news)
 
-        # print(f"len_more:\t{len_of}\tcount:\t{count}\t{n}")
         if len_of == 0:
             return
         try:
             button_more_news[0].click()
         except:
             return
-
-        # driver.implicitly_wait(3)
 
     return True
 
@@ -73,10 +70,10 @@ driver.implicitly_wait(5)
 driver.maximize_window()
 
 # ----------------------------
-main_topics_count_min = 4
-len_new_news = 48
+main_topics_count_min = 0
+len_new_news = 0
 
-count_of_start = 5
+count_of_start = len_new_news // 12 + 1 if len_new_news % 12 != 0 else len_new_news // 12
 max_count = 40
 
 
@@ -139,12 +136,12 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
         for count_of_current_news in range(len_old_news, len_new_news):
 
             driver.get(main_url)
-            time.sleep(2)
+            time.sleep(4)
             click_on_more_n(count_of_more)
-            time.sleep(2)
+            time.sleep(1)
 
             list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
-            # time.sleep(1)
+            time.sleep(1)
 
             len_new_news_current = len(list_of_news)
             print(f"len_old:\t{len_old_news}\tlen_current:\t{len_new_news_current}")
