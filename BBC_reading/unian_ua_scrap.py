@@ -17,6 +17,7 @@ def if_exist_in_excel(date, topic):
     print("Not present")
     return False
 
+
 def create_all_text(text_list):
     all_text = ""
 
@@ -28,12 +29,13 @@ def create_all_text(text_list):
 
     return all_text
 
+
 def add_new_current_block_topic(row, df_current_block_topics):
     df_current_topic = pd.DataFrame([row], columns=columns_my)
     return df_current_block_topics.append(df_current_topic, ignore_index=True)
 
-def click_on_more_n(n):
 
+def click_on_more_n(n):
     if n == 0:
         return
     for count in range(0, n):
@@ -53,27 +55,29 @@ def click_on_more_n(n):
     return True
 
 
-file_name="exel_files/zn_ua_scraping.xlsx"
+file_name = "exel_files/zn_ua_scraping.xlsx"
 
 main_topics_url = ['https://dt.ua/POLITICS',
-                       'https://dt.ua/ECONOMICS',
-                       'https://dt.ua/TECHNOLOGIES',
-                       'https://dt.ua/SPORT',
-                       'https://dt.ua/UKRAINE']
+                   'https://dt.ua/ECONOMICS',
+                   'https://dt.ua/TECHNOLOGIES',
+                   'https://dt.ua/SPORT',
+                   'https://dt.ua/UKRAINE']
 
 main_topics_url_special = ['https://dt.ua/theme/69',
                            'https://dt.ua/theme/74',
                            'https://dt.ua/theme/71']
 
-main_topics_text = ['Політика', 'Економіка','Технології','Спорт','Україна']
+main_topics_text = ['Політика', 'Економіка', 'Технології', 'Спорт', 'Україна']
 driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
 driver.implicitly_wait(5)
 driver.maximize_window()
 
 # ----------------------------
-main_topics_count_min = 2
-len_new_news = 0
-count_of_start = 0
+main_topics_count_min = 4
+len_new_news = 48
+
+count_of_start = 5
+max_count = 40
 
 
 main_topic_text = main_topics_text[main_topics_count_min]
@@ -96,44 +100,38 @@ password_tag = driver.find_element_by_id('passport_password')
 login_tag.send_keys(login)
 password_tag.send_keys(password)
 password_tag.submit()
-time.sleep(3)
+time.sleep(2)
 
 # ----------------
 
 df_news = pd.read_excel(file_name, index_col=0)
 
-# main_topics_count_min = 2
-
-len_new_news = 0
-count_of_start = 0
-
 for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:], main_topics_count_min):
 
     main_topic_text = main_topics_text[count_of_topic]
     print(f"main_topic:\t{main_topic_text}")
-    max_count = 40
 
     driver.get(main_url)
-    time.sleep(2)
+    time.sleep(3)
 
     for count_of_more in range(count_of_start, max_count):
 
         click_on_more_n(count_of_more)
-        time.sleep(1)
+        time.sleep(2)
 
         list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
-        time.sleep(1)
+        # time.sleep(1)
 
         len_old_news = len_new_news
         len_new_news = len(list_of_news)
+
+        print(f"len_old:\t{len_old_news}\tlen_new:\t{len_new_news}")
 
         if len_new_news <= len_old_news:
             print(f"len_new <= len_old")
             len_new_news = 0
             count_of_start = 0
             break
-
-        print(f"len_old:\t{len_old_news}\tlen_new:\t{len_new_news}")
 
         # --- create block of news ---
         df_current_block_topics = pd.DataFrame(columns=columns_my)
@@ -143,15 +141,13 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
             driver.get(main_url)
             time.sleep(2)
             click_on_more_n(count_of_more)
-            time.sleep(1)
-
+            time.sleep(2)
 
             list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
-            time.sleep(1)
+            # time.sleep(1)
 
             len_new_news_current = len(list_of_news)
             print(f"len_old:\t{len_old_news}\tlen_current:\t{len_new_news_current}")
-
 
             print(f"coutn:\t{count_of_current_news}")
             current_new = list_of_news[count_of_current_news]
@@ -181,11 +177,11 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
             # ---- end read new ---
             row = [date, '', main_topic_text, topic, all_text]
 
-            df_current_block_topics = add_new_current_block_topic(row=row, df_current_block_topics=df_current_block_topics)
+            df_current_block_topics = add_new_current_block_topic(row=row,
+                                                                  df_current_block_topics=df_current_block_topics)
 
-        driver.get(main_url)
+
         df_news = df_news.append(df_current_block_topics, ignore_index=True)
         df_news.to_excel(file_name)
-
 
 driver.close()
