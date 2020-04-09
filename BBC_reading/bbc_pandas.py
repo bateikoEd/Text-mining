@@ -10,7 +10,7 @@ from function import *
     Суспільство - 3
     Наука - 4
     Технології - 5
-    Здоров'я - 6
+    Health - 6
     Спорт - 7'''
 def bbc_scraping(count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
