@@ -1,8 +1,7 @@
-from bbc_pandas import bbc_scraping
 from class_scrapping import Scrapping
 
 object = Scrapping()
 
-# object.bbc_scraping()
+object.bbc_scraping()
 # object.nz_scrapping()
-object.to_all_txt()
+# object.to_all_txt()

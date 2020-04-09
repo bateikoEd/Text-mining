@@ -68,6 +68,15 @@ class Scrapping:
     def to_current_url(self, main_url):
         self.driver.get(main_url)
 
+    '''
+        Політика - 0
+        Економіка - 1
+        Технології - 2
+        Спорт - 3
+        Україна - 4
+        corona in the world - 1.0
+        carantin in ukraine - 1.1
+        ooc - 1.2'''
     def nz_scrapping(self, main_topics_count_min=0, len_new_news=0, max_count=40):
         file_name = "exсel_files/zn_ua_scraping.xlsx"
 
@@ -173,6 +182,15 @@ class Scrapping:
                 df_news = df_news.append(df_current_block_topics, ignore_index=True)
                 df_news.to_excel(file_name)
 
+    '''
+        коронавірус - 0
+        Політика - count_of_number_one_topic = 1
+        Економіка - 2
+        Суспільство - 3
+        Наука - 4
+        Технології - 5
+        Health - 6
+        Спорт - 7'''
     def bbc_scraping(self, count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
         main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',

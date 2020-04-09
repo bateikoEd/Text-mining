@@ -63,7 +63,7 @@ def go_date_bbc(message):
     list_of_message = message.split()
 
     try:
-        date = list_of_message[0]
+        date = int(list_of_message[0])
         current_month = list_of_message[1].strip().lower()
         for month in date_dictionary.keys():
             if current_month.startswith(month):
