@@ -74,7 +74,7 @@ main_topics_count_min = 0
 len_new_news = 0
 
 count_of_start = len_new_news // 12 + 1 if len_new_news % 12 != 0 else len_new_news // 12
-max_count = 40
+max_count = 2
 
 
 main_topic_text = main_topics_text[main_topics_count_min]
@@ -109,12 +109,12 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
     print(f"main_topic:\t{main_topic_text}")
 
     driver.get(main_url)
-    time.sleep(3)
+    time.sleep(2)
 
     for count_of_more in range(count_of_start, max_count):
 
         click_on_more_n(count_of_more)
-        time.sleep(2)
+        time.sleep(1)
 
         list_of_news = driver.find_elements_by_xpath('//li[@class="column x1x2"]/ul/li')
         # time.sleep(1)
@@ -136,7 +136,7 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
         for count_of_current_news in range(len_old_news, len_new_news):
 
             driver.get(main_url)
-            time.sleep(4)
+            time.sleep(1)
             click_on_more_n(count_of_more)
             time.sleep(1)
 
@@ -177,6 +177,7 @@ for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:
             df_current_block_topics = add_new_current_block_topic(row=row,
                                                                   df_current_block_topics=df_current_block_topics)
 
+        len_old_news = 0
 
         df_news = df_news.append(df_current_block_topics, ignore_index=True)
         df_news.to_excel(file_name)
