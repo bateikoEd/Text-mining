@@ -70,7 +70,7 @@ driver.implicitly_wait(5)
 driver.maximize_window()
 
 # ----------------------------
-main_topics_count_min = 0
+main_topics_count_min = 2
 len_new_news = 0
 
 count_of_start = len_new_news // 12 + 1 if len_new_news % 12 != 0 else len_new_news // 12
