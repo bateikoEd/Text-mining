@@ -1,4 +1,7 @@
-from bbc_pandas import bbc_scraping
+from class_scrapping import Scrapping
 
+object = Scrapping()
 
-bbc_scraping(count_of_number_one_topic=7)
+object.nz_scrapping()
+object.bbc_scraping()
+# object.to_all_txt()
