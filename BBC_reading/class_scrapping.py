@@ -77,8 +77,9 @@ class Scrapping:
         corona in the world - 1.0
         carantin in ukraine - 1.1
         ooc - 1.2'''
-    def nz_scrapping(self, main_topics_count_min=0, len_new_news=0, max_count=40):
-        file_name = "exсel_files/zn_ua_scraping.xlsx"
+
+    def nz_scrapping(self, main_topics_count_min=0, len_new_news=0, max_count=40, file_name="zn_ua_scraping.xlsx"):
+        file_name = f"exсel_files/{file_name}"
 
         main_topics_url = ['https://dt.ua/POLITICS',
                            'https://dt.ua/ECONOMICS',
@@ -103,7 +104,9 @@ class Scrapping:
 
         self.nz_authorization()
 
-        df_news = pd.read_excel(file_name, index_col=0)
+        self.df_news = pd.read_excel(file_name, index_col=0)
+
+        # print(f"head:\n\n{df_news.all}")
 
         for count_of_topic, main_url in enumerate(main_topics_url[main_topics_count_min:], main_topics_count_min):
 
@@ -179,8 +182,8 @@ class Scrapping:
                     df_current_block_topics = self.add_new_current_block_topic(row=row,
                                                                                df_current_block_topics=df_current_block_topics)
 
-                df_news = df_news.append(df_current_block_topics, ignore_index=True)
-                df_news.to_excel(file_name)
+                self.df_news = self.df_news.append(df_current_block_topics, ignore_index=True)
+                self.df_news.to_excel(file_name)
 
     '''
         коронавірус - 0
@@ -191,6 +194,7 @@ class Scrapping:
         Технології - 5
         Health - 6
         Спорт - 7'''
+
     def bbc_scraping(self, count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
 
         main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
@@ -267,3 +271,22 @@ class Scrapping:
     def to_all_txt(self):
         for elem in self.file_names:
             go_to_txt(file_name=elem)
+
+    def len_of_news(self):
+        file_name = self.file_names[0]
+        file_name = f"exсel_files/{file_name}"
+
+        self.df_news = pd.read_excel(file_name, index_col=0)
+        bbc_len = len(self.df_news)
+
+        file_name = self.file_names[1]
+        file_name = f"exсel_files/{file_name}"
+
+        self.df_news = pd.read_excel(file_name, index_col=0)
+        nz_len = len(self.df_news)
+
+        all_len = nz_len + bbc_len
+        print(f"bbc_len:\t{bbc_len}\tnz_len:\t{nz_len}\nall_len:\t{all_len}")
+
+    # def __del__(self):
+    #     self.driver.quit()
