@@ -290,3 +290,17 @@ class Scrapping:
 
     # def __del__(self):
     #     self.driver.quit()
+
+    def drop_duplicates(self, keep='first', ignore_index=True):
+
+        for file_name in self.file_names:
+            file_name = f"exсel_files/{file_name}"
+            df_news = pd.read_excel(file_name, index_col=0)
+
+            print(f"before:\t{len(df_news)}")
+
+            df_news.drop_duplicates(inplace=True, keep=keep, ignore_index=ignore_index)
+
+            print(f"after:\t{len(df_news)}")
+
+            df_news.to_excel(file_name)
