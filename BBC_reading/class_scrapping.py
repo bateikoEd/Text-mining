@@ -78,7 +78,8 @@ class Scrapping:
         carantin in ukraine - 1.1
         ooc - 1.2'''
 
-    def nz_scrapping(self, main_topics_count_min=0, len_new_news=0, max_count=40, file_name="zn_ua_scraping.xlsx"):
+    def nz_scrapping(self, main_topics_count_min=0, len_new_news=0, max_count=2, if_topic_present=True,
+                     file_name="zn_ua_scraping.xlsx"):
         file_name = f"exсel_files/{file_name}"
 
         main_topics_url = ['https://dt.ua/POLITICS',
@@ -170,6 +171,8 @@ class Scrapping:
 
                     # condition if we have the current topic with same date
                     if self.if_exist_in_excel(date, topic, df_current_block_topics):
+                        if if_topic_present:
+                            break
                         continue
 
                     text_list = self.driver.find_elements_by_tag_name('p')
