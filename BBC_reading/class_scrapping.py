@@ -198,7 +198,8 @@ class Scrapping:
         Health - 6
         Спорт - 7'''
 
-    def bbc_scraping(self, count_of_number_one_topic=0, count_of_last_topic=8, file_name="bbc_scraping.xlsx"):
+    def bbc_scraping(self, count_of_number_one_topic=0, count_of_last_topic=8, if_topic_present=True,
+                     file_name="bbc_scraping.xlsx"):
 
         main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
                            'https://www.bbc.com/ukrainian/topics/ca170ae3-99c1-48db-9b67-2866f85e7342',
@@ -251,6 +252,8 @@ class Scrapping:
 
                 # condition if we have the current topic with same date
                 if self.if_exist_in_excel(date, topic, df_current_block_topics):
+                    if if_topic_present:
+                        break
                     continue
 
                 try:
