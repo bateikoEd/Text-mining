@@ -7,7 +7,7 @@ from function import for_date_nz, go_date_bbc, go_to_txt, create_all_text
 
 class Scrapping:
     def __init__(self, ):
-        self.driver = webdriver.Chrome(executable_path='/home/bateiko/Downloads/chromedriver_linux64/chromedriver')
+        self.driver = webdriver.Chrome(executable_path='chromedriver')
         self.driver.implicitly_wait(5)
         self.driver.maximize_window()
         self.columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
