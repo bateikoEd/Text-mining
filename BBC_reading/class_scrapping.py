@@ -293,6 +293,7 @@ class Scrapping:
 
         all_len = nz_len + bbc_len
         print(f"bbc_len:\t{bbc_len}\tnz_len:\t{nz_len}\nall_len:\t{all_len}")
+        return all_len
 
     # def __del__(self):
     #     self.driver.quit()
