@@ -67,6 +67,7 @@ class Scrapping:
 
     def to_current_url(self, main_url):
         self.driver.get(main_url)
+        time.sleep(2)
 
     '''
         Політика - 0
@@ -101,7 +102,6 @@ class Scrapping:
         columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
         self.to_current_url(main_url)
-        time.sleep(2)
 
         self.nz_authorization()
 
@@ -115,7 +115,6 @@ class Scrapping:
             print(f"main_topic:\t{main_topic_text}")
 
             self.to_current_url(main_url)
-            time.sleep(3)
 
             for count_of_more in range(count_of_start, max_count):
 
@@ -142,7 +141,6 @@ class Scrapping:
                 for count_of_current_news in range(len_old_news, len_new_news):
 
                     self.to_current_url(main_url)
-                    time.sleep(4)
                     self.click_on_more_n(count_of_more)
                     time.sleep(1)
 
