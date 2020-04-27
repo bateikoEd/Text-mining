@@ -2,7 +2,7 @@ from selenium import webdriver
 import pandas as pd
 import time
 
-from function import for_date_nz, go_date_bbc, go_to_txt, create_all_text
+from function import for_date_nz, go_date_bbc, go_to_txt_one_directory, create_all_text, go_to_txt_categorization
 
 
 class Scrapping:
@@ -274,9 +274,13 @@ class Scrapping:
             # save in exel +1 block of news
             self.df_news.to_excel(file_name)
 
-    def to_all_txt(self):
+    def go_to_txt_categorizations(self):
         for elem in self.file_names:
-            go_to_txt(file_name=elem)
+            go_to_txt_categorization(file_name=elem)
+
+    def go_to_txt_one_directory(self):
+        for elem in self.file_names:
+            go_to_txt_one_directory(file_name=elem)
 
     def len_of_news(self):
         file_name = self.file_names[0]
