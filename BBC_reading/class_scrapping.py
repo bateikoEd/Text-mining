@@ -67,6 +67,7 @@ class Scrapping:
 
     def to_current_url(self, main_url):
         self.driver.get(main_url)
+        time.sleep(2)
 
     '''
         Політика - 0
@@ -101,7 +102,6 @@ class Scrapping:
         columns_my = ["Date", "Author", "Main_Topics", "Topic", "Text"]
 
         self.to_current_url(main_url)
-        time.sleep(2)
 
         self.nz_authorization()
 
@@ -115,7 +115,6 @@ class Scrapping:
             print(f"main_topic:\t{main_topic_text}")
 
             self.to_current_url(main_url)
-            time.sleep(3)
 
             for count_of_more in range(count_of_start, max_count):
 
@@ -142,7 +141,6 @@ class Scrapping:
                 for count_of_current_news in range(len_old_news, len_new_news):
 
                     self.to_current_url(main_url)
-                    time.sleep(4)
                     self.click_on_more_n(count_of_more)
                     time.sleep(1)
 
@@ -201,14 +199,12 @@ class Scrapping:
     def bbc_scraping(self, count_of_number_one_topic=0, count_of_last_topic=8, if_topic_present=True,
                      file_name="bbc_scraping.xlsx"):
 
-        main_topics_url = ['https://www.bbc.com/ukrainian/topics/5fe79b8d-56e5-4aff-8b05-21f9ad731912',
-                           'https://www.bbc.com/ukrainian/topics/ca170ae3-99c1-48db-9b67-2866f85e7342',
-                           'https://www.bbc.com/ukrainian/topics/5307a8d9-f620-40f5-92d4-f99c919a6ffa',
-                           'https://www.bbc.com/ukrainian/topics/0f469e6a-d4a6-46f2-b727-2bd039cb6b53',
-                           'https://www.bbc.com/ukrainian/topics/31684f19-84d6-41f6-b033-7ae08098572a',
-                           'https://www.bbc.com/ukrainian/topics/c4794229-7f87-43ce-ac0a-6cfcd6d3cef2',
-                           'https://www.bbc.com/ukrainian/topics/4063f80f-cccc-44c8-9449-5ca44e4c8592',
-                           'https://www.bbc.com/ukrainian/topics/75612fa6-147c-4a43-97fa-fcf70d9cced3']
+        main_topics_url = ['https://www.bbc.com/ukrainian/topics/c87z2kmre5nt',
+                           'https://www.bbc.com/ukrainian/topics/cyx5kzy2wdrt',
+                           'https://www.bbc.com/ukrainian/topics/cpzd47779gvt',
+                           'https://www.bbc.com/ukrainian/topics/cvjp20q533jt',
+                           'https://www.bbc.com/ukrainian/topics/cyx5kzy4w5yt',
+                           'https://www.bbc.com/ukrainian/topics/cwr9jqqqq13t']
 
         file_name = f"exсel_files/{file_name}"
 
@@ -221,12 +217,12 @@ class Scrapping:
 
             self.to_current_url(current_url)
 
-            main_topics_text = self.driver.find_element_by_class_name("page-title").text
+            main_topics_text = self.driver.find_elements_by_tag_name("h1")[0].text
 
             print(f"main_topic:\t{main_topics_text}\tcount:\t{count_of_main_topics}")
 
             # list of news in current block
-            list_of_news_of_Ukraine = self.driver.find_elements_by_xpath('//div[@class="eagle"]/div')
+            list_of_news_of_Ukraine = self.driver.find_elements_by_xpath('//ol/li')
             len_of_news = len(list_of_news_of_Ukraine)
 
             # create dataFrame object for one block for main topic
@@ -235,17 +231,18 @@ class Scrapping:
             for count_of_topic in range(0, len_of_news):
                 # update webpage
                 self.to_current_url(current_url)
-                current_web_elem = self.driver.find_elements_by_xpath('//div[@class="eagle"]/div')[count_of_topic]
+                current_web_elem = self.driver.find_elements_by_xpath('//ol/li')[count_of_topic]
 
                 # click on current new
                 current_web_elem.click()
+                # time.sleep(2)
 
                 try:
-                    date = self.driver.find_element_by_xpath('//li[@class="mini-info-list__item"]/div').text
+                    date = self.driver.find_element_by_class_name('date date--v2').text
                 except:
-                    date = self.driver.find_element_by_xpath('//*[@id="root"]/main/div[3]/time').text
-                topic = self.driver.find_element_by_tag_name('h1').text
-
+                    date = ''
+                topic = self.driver.find_elements_by_tag_name('h1')[0].text
+                print(f"date:\t:{date}")
                 date = go_date_bbc(date)
 
                 print(f"Topic:\t{topic}\tdate:\t{date}")
