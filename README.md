@@ -14,10 +14,10 @@
  
 # Description
 
-```
+
 
 We want to explore how the number of news about coronavirus has changed from January 1st to the end of quarantine (we may choose shorter period), and plot dependencies (chart or bar chart from January 1st to *) between these news articles and articles on another topics such as economics , politics etc. We will create a spreadsheet contains topics and appropriate words or combinations(selected words does not dependent on the case or plural form, like virus, viruses etc). Every theme will have probability of word found in text(for instance, there is probability about 0.8 to found word “pandemia” in article about coronavirus). Then we will calculate a frequency of words from every topic we are looking for(for example, 0.2 coronavirus, 0.5 economics, 0.2 politics, 0.1 science). And comparing this indicators with probabilities we will make conclusions.
-```
+
 
 # Target
 
